@@ -4,9 +4,9 @@ import React from 'react'
 
 const ShopScreen = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Shop screen</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 

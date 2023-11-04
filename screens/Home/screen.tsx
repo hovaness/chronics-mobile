@@ -17,9 +17,9 @@ const HomeScreen = () => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
         <Text style= {{fontFamily:"Cormorant-Light", fontSize: 50}}>Хроники уебики</Text>
-    </View>
+    </SafeAreaView>
   )
 }
 

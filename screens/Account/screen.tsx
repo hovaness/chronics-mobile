@@ -6,11 +6,11 @@ const AccountScreen = () => {
 
 
   return (
-    <View>
+    <SafeAreaView>
         <TouchableOpacity onPress={()=>console.log('123')}>
           <Text>DFKS</Text>
         </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
 
