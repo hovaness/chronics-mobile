@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
@@ -25,9 +32,15 @@ export const Post = ({ product }: ProductProps) => {
           uri: product.imageUrl,
         }}></Image>
       <View style={styles.Details}>
-        <Text style={styles.Tittle}>{product.title}</Text>
-        <Text style={styles.description}>{product.text}</Text>
-        <TouchableOpacity style={styles.Button}>
+        <Text numberOfLines={4} style={styles.Tittle}>
+          {product.title}
+        </Text>
+        <Text numberOfLines={5} style={styles.description}>
+          {product.text}
+        </Text>
+        <TouchableOpacity
+          onPress={() => Linking.openURL('https://robi.team/#products')}
+          style={styles.Button}>
           <Text style={styles.ButtonText}>Подробнее..</Text>
         </TouchableOpacity>
       </View>
@@ -44,7 +57,10 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   description: {
-    maxWidth: 200,
+    overflow: 'hidden',
+
+    maxHeight: 170,
+    maxWidth: 220,
     fontSize: 12,
     color: 'rgba(0, 0, 0, 0.4)',
     marginTop: 5,
@@ -63,7 +79,7 @@ const styles = StyleSheet.create({
     borderBottomStyle: 'solid',
   },
   Tittle: {
-    maxWidth: 150,
+    maxWidth: 200,
     fontSize: 17,
     fontWeight: '700',
     fontFamily: 'Cormorant-Light',
