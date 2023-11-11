@@ -1,26 +1,59 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useFonts } from 'expo-font'
+import supabase from '../../lib/supabase'
 import Category from './components/Category'
-
-
+import ICategory from '../../models/ICategory'
 
 const HomeScreen = () => {
   const [fontsLoaded,error] = useFonts({
-   'Cormorant': require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
-   'Jost-Light': require('../../assets/fonts/Jost-Light.ttf'),
-   'Jost':require('../../assets/fonts/Jost-Medium.ttf')
+    'Cormorant': require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
+    'Jost': require('../../assets/fonts/Jost-Medium.ttf'),
+    'Jost-Light': require('../../assets/fonts/Jost-Light.ttf')
   })
+  
 
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
+  useEffect(()=>{
+    getName();
+  },[])
+  
   if(!fontsLoaded && !error){
     return null;
   }
-
+  async function getName() {
+    try{
+      const {data, error, status} = await supabase.from('CATEGORY').select();
+      if(error && status !== 406){
+        throw error;
+      }
+      if(data){
+        setCategories(data);
+      }
+    }catch(error){
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    } finally {
+    }
+  }
+  
   return (
-    <SafeAreaView style = {styles.container}>
-      <Text style={styles.title}>Хроники</Text>
-      <Category name='Персонажи' img_code='' desc='Выучите всех персонажей из книг' color='#4293D4'/>
+    <SafeAreaView style={styles.container}>
+
+        {/* Сюда добавить все что идет до категорий */}
+        <Text style={styles.title}>Хроники уебики</Text>
+
+        {/* Карусель категорий */}
+        <ScrollView  horizontal showsHorizontalScrollIndicator={false} >
+          {categories.map(category => (
+            <Category name={category.name} description={category.description} color_code={category.color_code} key={category.name}/>
+          ))}
+        </ScrollView>
+
+
     </SafeAreaView>
   )
 }
@@ -33,11 +66,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     flex: 1,
   },
-  title: {
-    fontFamily: 'Cormorant',
-    fontSize: 32,
+  title:{
+    fontFamily:'Cormorant',
     color: '#333',
-    fontWeight: "700",
+    fontSize:32,
     textTransform:'uppercase',
+  },
+  scroll:{
+    marginLeft:20,
   }
 })
