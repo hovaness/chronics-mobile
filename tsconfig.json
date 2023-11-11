@@ -4,6 +4,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "navigation/Tabs.jsx"
+    "navigation/Tabs.tsx"
   ]
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp, BottomTabScreenProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo } from '@expo/vector-icons';
 import HomeScreen from '../screens/Home/screen';
 import ShopScreen from '../screens/Shop/screen';
@@ -7,7 +7,19 @@ import AccountScreen from '../screens/Account/screen';
 import { AntDesign } from '@expo/vector-icons';
 
 
+
 const Tab = createBottomTabNavigator();
+
+// type TabStackParamList = {
+//   Home: undefined,
+//   Shop: undefined,
+//   Account: undefined,
+// }
+
+// export type Props = BottomTabScreenProps<TabStackParamList>
+
+
+
 
 const Tabs = () => {
   return (

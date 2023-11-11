@@ -19,7 +19,6 @@ const HomeScreen = () => {
   useEffect(()=>{
     getName();
   },[])
-  
   if(!fontsLoaded && !error){
     return null;
   }
@@ -45,15 +44,14 @@ const HomeScreen = () => {
 
         {/* Сюда добавить все что идет до категорий */}
         <Text style={styles.title}>Хроники уебики</Text>
-
+        
         {/* Карусель категорий */}
         <ScrollView  horizontal showsHorizontalScrollIndicator={false} >
           {categories.map(category => (
             <Category name={category.name} description={category.description} color_code={category.color_code} key={category.name}/>
           ))}
         </ScrollView>
-
-
+        
     </SafeAreaView>
   )
 }
@@ -72,7 +70,4 @@ const styles = StyleSheet.create({
     fontSize:32,
     textTransform:'uppercase',
   },
-  scroll:{
-    marginLeft:20,
-  }
 })
