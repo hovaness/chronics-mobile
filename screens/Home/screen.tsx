@@ -5,6 +5,9 @@ import { useFonts } from 'expo-font'
 import supabase from '../../lib/supabase'
 import Category from './components/Category'
 import ICategory from '../../models/ICategory'
+import { Button } from 'react-native-elements'
+import { useNavigation } from '@react-navigation/native'
+import { RootScreenNavigationProp } from '../../types.nav'
 
 const HomeScreen = () => {
   const [fontsLoaded,error] = useFonts({
@@ -12,6 +15,7 @@ const HomeScreen = () => {
     'Jost': require('../../assets/fonts/Jost-Medium.ttf'),
     'Jost-Light': require('../../assets/fonts/Jost-Light.ttf')
   })
+  const navigation = useNavigation<RootScreenNavigationProp>();
   
 
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -44,7 +48,7 @@ const HomeScreen = () => {
 
         {/* Сюда добавить все что идет до категорий */}
         <Text style={styles.title}>Хроники уебики</Text>
-        
+        <Button onPress={()=>navigation.navigate('Root', {screen:'Home'}) }/>
         {/* Карусель категорий */}
         <ScrollView  horizontal showsHorizontalScrollIndicator={false} >
           {categories.map(category => (
