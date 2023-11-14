@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useFonts } from 'expo-font'
 import supabase from '../../lib/supabase'
@@ -10,52 +10,53 @@ import { useNavigation } from '@react-navigation/native'
 import { RootScreenNavigationProp } from '../../types.nav'
 
 const HomeScreen = () => {
-  const [fontsLoaded,error] = useFonts({
-    'Cormorant': require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
-    'Jost': require('../../assets/fonts/Jost-Medium.ttf'),
-    'Jost-Light': require('../../assets/fonts/Jost-Light.ttf')
+  const [fontsLoaded, error] = useFonts({
+    Cormorant: require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
+    Jost: require('../../assets/fonts/Jost-Medium.ttf'),
+    'Jost-Light': require('../../assets/fonts/Jost-Light.ttf'),
   })
-  const navigation = useNavigation<RootScreenNavigationProp>();
-  
+  const navigation = useNavigation<RootScreenNavigationProp>()
 
-  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([])
 
-  useEffect(()=>{
-    getName();
-  },[])
-  if(!fontsLoaded && !error){
-    return null;
+  useEffect(() => {
+    getName()
+  }, [])
+  if (!fontsLoaded && !error) {
+    return null
   }
   async function getName() {
-    try{
-      const {data, error, status} = await supabase.from('CATEGORY').select();
-      if(error && status !== 406){
-        throw error;
+    try {
+      const { data, error, status } = await supabase.from('CATEGORY').select()
+      if (error && status !== 406) {
+        throw error
       }
-      if(data){
-        setCategories(data);
+      if (data) {
+        setCategories(data)
       }
-    }catch(error){
+    } catch (error) {
       if (error instanceof Error) {
-        alert(error.message);
+        alert(error.message)
       }
     } finally {
     }
   }
-  
+
   return (
     <SafeAreaView style={styles.container}>
-
-        {/* Сюда добавить все что идет до категорий */}
-        <Text style={styles.title}>Хроники уебики</Text>
-        <Button onPress={()=>navigation.navigate('Root', {screen:'Home'}) }/>
-        {/* Карусель категорий */}
-        <ScrollView  horizontal showsHorizontalScrollIndicator={false} >
-          {categories.map(category => (
-            <Category name={category.name} description={category.description} color_code={category.color_code} key={category.name}/>
-          ))}
-        </ScrollView>
-        
+      {/* Сюда добавить все что идет до категорий */}
+      <Text style={styles.title}>Хроники уебики</Text>
+      {/* Карусель категорий */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {categories.map((category) => (
+          <Category
+            name={category.name}
+            description={category.description}
+            color_code={category.color_code}
+            key={category.name}
+          />
+        ))}
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -63,15 +64,14 @@ const HomeScreen = () => {
 export default HomeScreen
 
 const styles = StyleSheet.create({
-  container:{
-    marginTop:20,
+  container: {
+    marginTop: 20,
     marginHorizontal: 20,
-    flex: 1,
   },
-  title:{
-    fontFamily:'Cormorant',
+  title: {
+    fontFamily: 'Cormorant',
     color: '#333',
-    fontSize:32,
-    textTransform:'uppercase',
+    fontSize: 32,
+    textTransform: 'uppercase',
   },
 })

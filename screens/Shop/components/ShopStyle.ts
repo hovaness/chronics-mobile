@@ -36,7 +36,6 @@ export const styles = StyleSheet.create({
       maxWidth: 200,
       fontSize: 17,
       fontWeight: '700',
-      fontFamily: 'Cormorant-Light',
     },
     ButtonText: {
       fontSize: 12,
