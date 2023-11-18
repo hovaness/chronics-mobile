@@ -8,7 +8,7 @@ import {
   GreetingScreenNavigatorProp,
   ProfileScreenNavigationProp,
 } from '../../types.nav'
-import { useStatisticContext } from '../../Context/context'
+import { useStatisticContext } from '../../context/context'
 
 const Category = () => {
   const { productsInCart } = useStatisticContext()

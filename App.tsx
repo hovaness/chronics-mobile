@@ -14,7 +14,7 @@ import ICategory from './models/ICategory'
 import { RootStackParamList } from './types.nav'
 
 import { useState } from 'react'
-import { CartContext } from './Context/context'
+import { CartContext } from './context/context'
 import { Welcome } from './screens/Lets Go/components/Welcome'
 import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
@@ -37,7 +37,7 @@ export default function App() {
     <CartContext.Provider value={cartValues}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName='Welcome'>
             <Stack.Screen
               name="Root"
               component={Root}
