@@ -5,7 +5,7 @@ import React from 'react'
 import { IWords } from '../../../models/IWords'
 import { useNavigation } from '@react-navigation/native'
 import { WordScreenNavigatorProp } from '../../../types.nav'
-import { useStatisticContext } from '../../../Context/context'
+import { useStatisticContext } from '../../../context/context'
 interface WordProps {
   word: IWords
 }

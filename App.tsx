@@ -14,7 +14,7 @@ import ICategory from './models/ICategory'
 import { RootStackParamList } from './types.nav'
 
 import { useState } from 'react'
-import { CartContext } from './Context/context'
+import { CartContext } from './context/context'
 import { Welcome } from './screens/Lets Go/components/Welcome'
 import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
@@ -54,14 +54,9 @@ export default function App() {
               options={{ animation: 'fade_from_bottom' }}
             />
             <Stack.Screen
-              name="Welcome"
-              component={Welcome}
-              options={{ animation: 'fade_from_bottom' }}
-            />
-            <Stack.Screen
-              name="Information"
-              component={Information}
-              options={{ animation: 'fade_from_bottom' }}
+              name="Greeting"
+              component={Greeting}
+              options={{ animation: 'fade_from_bottom', headerShown:false }}
             />
           </Stack.Navigator>
         </NavigationContainer>

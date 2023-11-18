@@ -1,17 +1,19 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-import { useRoute } from '@react-navigation/native'
-import { GreetingScreenRouteProp } from '../../../types.nav'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { GreetingScreenNavigationProp } from '../../../types.nav';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 export const Welcome = () => {
-  const { params } = useRoute<GreetingScreenRouteProp>()
+  const navigation = useNavigation<GreetingScreenNavigationProp>();
   return (
-    <View>
+    <SafeAreaView>
       <Text> добро пожаловать!</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Greeting', {screen:"Information"})}>
         <Text>Поехали</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
