@@ -5,14 +5,14 @@ import { useFonts } from 'expo-font'
 import { useNavigation } from '@react-navigation/native'
 import {
   CategoryScreenNavigationProp,
-  GreetingScreenNavigatorProp,
+  GreetingScreenNavigationProp,
   ProfileScreenNavigationProp,
 } from '../../types.nav'
 import { useStatisticContext } from '../../context/context'
 
 const Category = () => {
   const { productsInCart } = useStatisticContext()
-  const navigation = useNavigation<GreetingScreenNavigatorProp>()
+  const navigation = useNavigation<GreetingScreenNavigationProp>()
   return (
     <View>
       <TouchableOpacity activeOpacity={0.5}>
@@ -38,7 +38,7 @@ const Category = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('Welcome')
+          navigation.navigate('Greeting', {screen: 'Welcome'})
         }}>
         <Text>Регистрация</Text>
       </TouchableOpacity>

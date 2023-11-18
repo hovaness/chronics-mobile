@@ -14,12 +14,11 @@ const Stack = createNativeStackNavigator()
 
 export default function WelcomeNavigate() {
   return (
-    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Welcome"
           component={Welcome}
-          options={{ animation: 'fade_from_bottom' }}
+          options={{ animation: 'fade_from_bottom', headerShown:false }}
         />
         <Stack.Screen
           name="Information"
@@ -27,6 +26,5 @@ export default function WelcomeNavigate() {
           options={{ animation: 'fade_from_bottom' }}
         />
       </Stack.Navigator>
-    </NavigationContainer>
   )
 }

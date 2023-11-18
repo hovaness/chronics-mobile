@@ -37,7 +37,7 @@ export default function App() {
     <CartContext.Provider value={cartValues}>
       <SafeAreaProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName='Welcome'>
+          <Stack.Navigator>
             <Stack.Screen
               name="Root"
               component={Root}
@@ -54,14 +54,9 @@ export default function App() {
               options={{ animation: 'fade_from_bottom' }}
             />
             <Stack.Screen
-              name="Welcome"
-              component={Welcome}
-              options={{ animation: 'fade_from_bottom' }}
-            />
-            <Stack.Screen
-              name="Information"
-              component={Information}
-              options={{ animation: 'fade_from_bottom' }}
+              name="Greeting"
+              component={Greeting}
+              options={{ animation: 'fade_from_bottom', headerShown:false }}
             />
           </Stack.Navigator>
         </NavigationContainer>
