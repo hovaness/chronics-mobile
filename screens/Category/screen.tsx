@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useMemo, useState } from 'react'
 import { CategoryScreenRouteProp } from '../../types.nav'
 import { useRoute } from '@react-navigation/native'
@@ -53,29 +53,31 @@ const CategoryScreen = () => {
 
   const { params } = useRoute<CategoryScreenRouteProp>()
   return (
-    <View style={{ backgroundColor: params.color_code, flex: 1 }}>
-      <Text style={{ color: '#fff', textAlign: 'center', fontSize: 32 }}>
-        {params.name}
-      </Text>
-      <View style={styles.containerDesription}>
-        <View style={styles.descriptionContent}>
-          <Text style={{ textAlign: 'center' }}>{params.description}</Text>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ backgroundColor: params.color_code, flex: 1 }}>
+        <Text style={{ color: '#fff', textAlign: 'center', fontSize: 32 }}>
+          {params.name}
+        </Text>
+        <View style={styles.containerDesription}>
+          <View style={styles.descriptionContent}>
+            <Text style={{ textAlign: 'center' }}>{params.description}</Text>
+          </View>
+        </View>
+        <View style={styles.containerInput}>
+          <TextInput
+            style={styles.Input}
+            onChangeText={(e) => setQuery(e)}
+            value={query}
+            placeholder="Поиск..."
+          />
+        </View>
+        <View style={styles.View}>
+          {word.map((word) => (
+            <Word word={word} key={word.word} />
+          ))}
         </View>
       </View>
-      <View style={styles.containerInput}>
-        <TextInput
-          style={styles.Input}
-          onChangeText={(e) => setQuery(e)}
-          value={query}
-          placeholder="Поиск..."
-        />
-      </View>
-      <View style={styles.View}>
-        {word.map((word) => (
-          <Word word={word} key={word.word} />
-        ))}
-      </View>
-    </View>
+    </ScrollView>
   )
 }
 

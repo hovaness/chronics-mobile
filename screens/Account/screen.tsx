@@ -5,35 +5,44 @@ import { useFonts } from 'expo-font'
 import { useNavigation } from '@react-navigation/native'
 import {
   CategoryScreenNavigationProp,
+  GreetingScreenNavigatorProp,
   ProfileScreenNavigationProp,
-  WordCountScreenProp,
 } from '../../types.nav'
 import { useStatisticContext } from '../../Context/context'
 
 const Category = () => {
   const { productsInCart } = useStatisticContext()
+  const navigation = useNavigation<GreetingScreenNavigatorProp>()
   return (
-    <TouchableOpacity activeOpacity={0.5}>
-      <View
-        style={{
-          backgroundColor: '#4293D4',
-          width: 220,
-          height: 140,
-          paddingHorizontal: 10,
-          paddingVertical: 20,
-          borderRadius: 15,
-          marginRight: 10,
-        }}>
-        <View style={styles.container}>
-          <View style={styles.textView}>
-            <Text style={styles.title}>Изучено слов</Text>
-            <Text numberOfLines={4} style={styles.desc}>
-              {productsInCart}
-            </Text>
+    <View>
+      <TouchableOpacity activeOpacity={0.5}>
+        <View
+          style={{
+            backgroundColor: '#4293D4',
+            width: 220,
+            height: 140,
+            paddingHorizontal: 10,
+            paddingVertical: 20,
+            borderRadius: 15,
+            marginRight: 10,
+          }}>
+          <View style={styles.container}>
+            <View style={styles.textView}>
+              <Text style={styles.title}>Изучено слов</Text>
+              <Text numberOfLines={4} style={styles.desc}>
+                {productsInCart}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('Welcome')
+        }}>
+        <Text>Регистрация</Text>
+      </TouchableOpacity>
+    </View>
   )
 }
 

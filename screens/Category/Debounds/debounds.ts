@@ -23,7 +23,7 @@ export default function UseDebounce(value, delay) {
       // ... нашего приложения в поле поиска, мы не хотим, чтобы debouncedValue...
       // ... не менялось до тех пор, пока он не прекратит печатать дольше, чем 500ms.
       return () => {
-        clearTimeout(handler);
+        clearTimeout(handler);/// return происходит только тогда, когда происходит изменение value
       };
     },
     // Вызывается снова, только если значение изменится

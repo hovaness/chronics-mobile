@@ -5,8 +5,9 @@ import HomeScreen from '../screens/Home/screen'
 import ShopScreen from '../screens/Shop/screen'
 import AccountScreen from '../screens/Account/screen'
 import { AntDesign } from '@expo/vector-icons'
+import { TabStackParamList } from '../types.nav'
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator<TabStackParamList>()
 
 const Tabs = () => {
   return (

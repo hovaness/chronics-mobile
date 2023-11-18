@@ -19,7 +19,10 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<TabStackParamList>
   Category: ICategory
   Word: IWords
+  Welcome: undefined
+  Information: undefined
 }
+
 export type ProfileScreenNavigationProp = CompositeNavigationProp<
   BottomTabNavigationProp<TabStackParamList, 'Home'>,
   NativeStackNavigationProp<RootStackParamList>
@@ -28,7 +31,7 @@ export type ProfileScreenNavigationProp = CompositeNavigationProp<
 export type TabStackParamList = {
   Home: undefined
   Account: undefined
-  Shop: { tovar: string }
+  Shop: undefined
 }
 
 export type RootScreenNavigationProp =
@@ -45,3 +48,10 @@ export type WordScreenNavigatorProp = NativeStackNavigationProp<
   'Word'
 >
 export type WordScreenRouteProp = RouteProp<RootStackParamList, 'Word'>
+
+export type GreetingScreenNavigatorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Welcome'
+>
+
+export type GreetingScreenRouteProp = RouteProp<RootStackParamList, 'Welcome'>

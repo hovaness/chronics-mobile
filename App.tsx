@@ -15,10 +15,16 @@ import { RootStackParamList } from './types.nav'
 
 import { useState } from 'react'
 import { CartContext } from './Context/context'
+import { Welcome } from './screens/Lets Go/components/Welcome'
+import { Information } from './screens/Lets Go/components/Information'
+import WelcomeNavigate from './navigation/WelcomeNavigate'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function Root() {
   return <Tabs />
+}
+function Greeting() {
+  return <WelcomeNavigate />
 }
 
 export default function App() {
@@ -45,6 +51,16 @@ export default function App() {
             <Stack.Screen
               name="Word"
               component={WordScreen}
+              options={{ animation: 'fade_from_bottom' }}
+            />
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              options={{ animation: 'fade_from_bottom' }}
+            />
+            <Stack.Screen
+              name="Information"
+              component={Information}
               options={{ animation: 'fade_from_bottom' }}
             />
           </Stack.Navigator>
