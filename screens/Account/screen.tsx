@@ -38,7 +38,7 @@ const Category = () => {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('Greeting', {screen: 'Welcome'})
+          navigation.navigate('Greeting', { screen: 'Welcome' })
         }}>
         <Text>Регистрация</Text>
       </TouchableOpacity>

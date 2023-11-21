@@ -5,18 +5,27 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { GreetingScreenNavigationProp } from '../../../types.nav'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFonts } from 'expo-font/build/FontHooks'
-export const Welcome = () => {
+import { useContextForLog } from '../../../context/contextForLog'
+
+export const Register = () => {
   const [fontsLoaded, error] = useFonts({
     Cormorant: require('../../../assets/fonts/CormorantUnicase-Bold.ttf'),
     Jost: require('../../../assets/fonts/Jost-Light.ttf'),
     'Jost-Light': require('../../../assets/fonts/Jost-Medium.ttf'),
   })
+  const { isLog, setIsLog } = useContextForLog()
+
+  function addInContextAndNavigate() {
+    setIsLog((prev) => !prev)
+    console.log(isLog)
+    navigation.navigate('Root', { screen: 'Home' })
+  }
 
   const navigation = useNavigation<GreetingScreenNavigationProp>()
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.tittle}>Добро пожаловать!</Text>
+        <Text style={styles.tittle}>Регестрируем в БЕСТ ХАРД СИТИ!</Text>
       </View>
       <View style={styles.Image}>
         <Image
@@ -25,17 +34,11 @@ export const Welcome = () => {
         />
       </View>
       <View style={styles.describe}>
-        <Text style={styles.textDescribe}>
-          Ум приветсвует вас в начале вашего приключения в Хрониках Разбитого
-          Мира
-        </Text>
+        <Text style={styles.textDescribe}>Войти через гугл</Text>
       </View>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Greeting', { screen: 'Information' })
-        }>
+      <TouchableOpacity onPress={() => addInContextAndNavigate()}>
         <View style={styles.Button}>
-          <Text style={styles.buttonText}>Поехали!</Text>
+          <Text style={styles.buttonText}>Войти!</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -51,13 +54,14 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginTop: 50,
+    width: 290,
   },
   Image: {
     height: 300,
     width: 200,
   },
   Button: {
-    marginTop: 80,
+    marginTop: 60,
     borderRadius: 14,
     width: 150,
     height: 70,
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Jost-Light',
   },
   textDescribe: {
-    fontSize: 21,
+    fontSize: 25,
     fontFamily: 'Cormorant',
     textAlign: 'center',
     lineHeight: 32,

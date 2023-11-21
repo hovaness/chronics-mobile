@@ -18,6 +18,8 @@ import { CartContext } from './context/context'
 import { Welcome } from './screens/Lets Go/components/Welcome'
 import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
+import { Register } from './screens/Lets Go/components/Register'
+import { LogContext, useContextForLog } from './context/contextForLog'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function Root() {
@@ -29,38 +31,55 @@ function Greeting() {
 
 export default function App() {
   const [productsInCart, setProductsInCart] = useState(0)
+  const [isLog, setIsLog] = useState(true)
+  const logvalues = {
+    isLog,
+    setIsLog,
+  }
+
   const cartValues = {
     productsInCart,
     setProductsInCart,
   }
+  console.log(isLog)
   return (
-    <CartContext.Provider value={cartValues}>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Root"
-              component={Root}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Category"
-              component={CategoryScreen}
-              options={{ animation: 'fade_from_bottom' }}
-            />
-            <Stack.Screen
-              name="Word"
-              component={WordScreen}
-              options={{ animation: 'fade_from_bottom' }}
-            />
-            <Stack.Screen
-              name="Greeting"
-              component={Greeting}
-              options={{ animation: 'fade_from_bottom', headerShown:false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </CartContext.Provider>
+    <LogContext.Provider value={logvalues}>
+      <CartContext.Provider value={cartValues}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              {isLog ? (
+                <Stack.Screen
+                  name="Greeting"
+                  component={Greeting}
+                  options={{
+                    animation: 'fade_from_bottom',
+                    headerShown: false,
+                  }}
+                />
+              ) : (
+                <Stack.Group>
+                  <Stack.Screen
+                    name="Root"
+                    component={Root}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Category"
+                    component={CategoryScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Word"
+                    component={WordScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                </Stack.Group>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </CartContext.Provider>
+    </LogContext.Provider>
   )
 }

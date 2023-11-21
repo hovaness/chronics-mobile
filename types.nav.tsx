@@ -36,6 +36,7 @@ export type TabStackParamList = {
 export type GreetingStackParamList = {
   Information: undefined
   Welcome: undefined
+  Register: undefined
 }
 
 export type RootScreenNavigationProp =
@@ -53,8 +54,7 @@ export type WordScreenNavigatorProp = NativeStackNavigationProp<
 >
 export type WordScreenRouteProp = RouteProp<RootStackParamList, 'Word'>
 
-export type GreetingScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList
->
+export type GreetingScreenNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>
 
 export type GreetingScreenRouteProp = RouteProp<RootStackParamList>
