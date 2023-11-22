@@ -29,6 +29,12 @@
     },
     "plugins": [
       "@react-native-google-signin/google-signin"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fec8685e-0485-4f08-81e3-b22d975af539"
+      }
+    },
+    "owner": "oniks"
   }
 }

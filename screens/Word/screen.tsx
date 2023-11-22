@@ -5,7 +5,6 @@ import { useRoute } from '@react-navigation/native'
 
 export const WordScreen = () => {
   const { params } = useRoute<WordScreenRouteProp>()
-  console.log(params.word)
 
   return (
     <View style={styles.container}>

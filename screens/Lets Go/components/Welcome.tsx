@@ -21,7 +21,7 @@ export const Welcome = () => {
       <View style={styles.Image}>
         <Image
           style={styles.Image}
-          source={require('../../../assets/public/image 44.png')}
+          source={require('../../../assets/public/hello.png')}
         />
       </View>
       <View style={styles.describe}>
@@ -35,7 +35,7 @@ export const Welcome = () => {
           navigation.navigate('Greeting', { screen: 'Information' })
         }>
         <View style={styles.Button}>
-          <Text style={styles.buttonText}>Поехали!</Text>
+          <Text style={styles.buttonText}>Далее</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -46,15 +46,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     rowGap: 25,
     marginTop: 50,
-    backgroundColor: '#E9E2B6',
+    backgroundColor: '#fff',
     flex: 1,
   },
   textContainer: {
     marginTop: 50,
   },
   Image: {
-    height: 300,
-    width: 200,
+    height: 232,
+    width: 230,
   },
   Button: {
     marginTop: 80,

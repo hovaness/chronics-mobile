@@ -45,7 +45,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Сюда добавить все что идет до категорий */}
-      <Text style={styles.title}>Хроники уебики</Text>
+      <Text style={styles.title}>Хроники</Text>
       {/* Карусель категорий */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {categories.map((category) => (

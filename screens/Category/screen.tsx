@@ -24,7 +24,6 @@ const CategoryScreen = () => {
     try {
       const { data } = await supabase.from('WORD').select()
       if (data) {
-        console.log(data)
         setWord(data)
       }
     } catch (error) {
@@ -41,7 +40,6 @@ const CategoryScreen = () => {
         .select()
         .ilike('word', `%${word}%`)
       if (data) {
-        console.log(data)
         setWord(data)
       }
     } catch (error) {

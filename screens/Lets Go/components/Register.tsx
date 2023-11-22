@@ -6,6 +6,8 @@ import { GreetingScreenNavigationProp } from '../../../types.nav'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFonts } from 'expo-font/build/FontHooks'
 import { useContextForLog } from '../../../context/contextForLog'
+import Auth from '../../../components/Auth'
+
 
 export const Register = () => {
   const [fontsLoaded, error] = useFonts({
@@ -30,17 +32,13 @@ export const Register = () => {
       <View style={styles.Image}>
         <Image
           style={styles.Image}
-          source={require('../../../assets/public/image 44.png')}
+          source={require('../../../assets/public/scan.png')}
         />
       </View>
       <View style={styles.describe}>
         <Text style={styles.textDescribe}>Войти через гугл</Text>
       </View>
-      <TouchableOpacity onPress={() => addInContextAndNavigate()}>
-        <View style={styles.Button}>
-          <Text style={styles.buttonText}>Войти!</Text>
-        </View>
-      </TouchableOpacity>
+      <Auth/>
     </View>
   )
 }
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     rowGap: 25,
     marginTop: 50,
-    backgroundColor: '#E9E2B6',
+    backgroundColor: '#fff',
     flex: 1,
   },
   textContainer: {
@@ -57,8 +55,8 @@ const styles = StyleSheet.create({
     width: 290,
   },
   Image: {
-    height: 300,
-    width: 200,
+    height: 232,
+    width: 230,
   },
   Button: {
     marginTop: 60,
