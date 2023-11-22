@@ -8,13 +8,13 @@ import supabase from '../lib/supabase';
 export default function(){
     GoogleSignin.configure({
         scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-        webClientId: '843521857213-scjtnodfkohftejsi66bkufav9esengg.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access). Required to get the `idToken` on the user object!
+        webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_ID, // client ID of type WEB for your server (needed to verify user ID and offline access). Required to get the `idToken` on the user object!
     });
     const signIn = async () => {
       try {
         await GoogleSignin.hasPlayServices();
         const userInfo = await GoogleSignin.signIn();
-        
+        console.log(JSON.stringify(userInfo,null,2))
       } catch (error) {
         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
           // user cancelled the login flow
