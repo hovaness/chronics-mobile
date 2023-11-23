@@ -19,7 +19,9 @@ import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
 import { Register } from './screens/Lets Go/components/Register'
 import { LogContext, useContextForLog } from './context/contextForLog'
-import 'expo-dev-client';
+import { UserContext } from './context/contexUser'
+import 'expo-dev-client'
+import IUser from './models/IUser'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -33,18 +35,20 @@ function Greeting() {
 export default function App() {
   const [productsInCart, setProductsInCart] = useState(0)
   const [isLog, setIsLog] = useState(true)
-  const logvalues = {
+  const [user, setUser] = useState<IUser>()
+  const userValues = {
+    user,
+    setUser,
     isLog,
     setIsLog,
   }
-
   const cartValues = {
     productsInCart,
     setProductsInCart,
   }
   console.log(isLog)
   return (
-    <LogContext.Provider value={logvalues}>
+    <UserContext.Provider value={userValues}>
       <CartContext.Provider value={cartValues}>
         <SafeAreaProvider>
           <NavigationContainer>
@@ -81,6 +85,6 @@ export default function App() {
           </NavigationContainer>
         </SafeAreaProvider>
       </CartContext.Provider>
-    </LogContext.Provider>
+    </UserContext.Provider>
   )
 }
