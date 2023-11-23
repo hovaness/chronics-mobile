@@ -7,6 +7,7 @@ import { Word } from '../Category/components/Word'
 import UseDebounce from './Debounds/debounds'
 
 const CategoryScreen = () => {
+  const { params } = useRoute<CategoryScreenRouteProp>()
   const [word, setWord] = useState([])
   const [query, setQuery] = useState('')
   const debouncedSearch = UseDebounce(query, 300)
@@ -21,23 +22,20 @@ const CategoryScreen = () => {
   }, [debouncedSearch])
 
   async function getProducts() {
-    try {
-      const { data } = await supabase.from('WORD').select()
-      if (data) {
-        setWord(data)
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
-      }
-    }
+    let { data, error } = await supabase.rpc('show_words_from_category', {
+      cat_name: params.name,
+    })
+
+    console.log(data)
+    setWord(data)
+    if (error) console.error(error)
+    else console.log(data)
   }
 
   async function SearchWord(word) {
     try {
-      const { data } = await supabase
-        .from('WORD')
-        .select()
+      let { data } = await supabase
+        .rpc('show_words_from_category', { cat_name: params.name })
         .ilike('word', `%${word}%`)
       if (data) {
         setWord(data)
@@ -49,10 +47,10 @@ const CategoryScreen = () => {
     }
   }
 
-  const { params } = useRoute<CategoryScreenRouteProp>()
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View style={{ backgroundColor: params.color_code, flex: 1 }}>
+      <View
+        style={{ backgroundColor: params.color_code, flex: 1, minHeight: 800 }}>
         <Text style={{ color: '#fff', textAlign: 'center', fontSize: 32 }}>
           {params.name}
         </Text>
