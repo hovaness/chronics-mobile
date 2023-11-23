@@ -27,7 +27,7 @@ export const Register = () => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.tittle}>Регестрируем в БЕСТ ХАРД СИТИ!</Text>
+        <Text style={styles.tittle}>Регистрируем в БЕСТ ХАРД СИТИ!</Text>
       </View>
       <View style={styles.Image}>
         <Image

@@ -70,8 +70,9 @@ const styles = StyleSheet.create({
   buttonText: {
     paddingTop: 1,
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 28,
     fontFamily: 'Jost-Light',
+    color:'#fff'
   },
   textDescribe: {
     fontSize: 21,

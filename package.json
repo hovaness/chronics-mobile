@@ -17,7 +17,9 @@
     "@react-navigation/native-stack": "^6.9.13",
     "@supabase/supabase-js": "^2.38.4",
     "expo": "~49.0.10",
+    "expo-dev-client": "~2.4.12",
     "expo-font": "~11.4.0",
+    "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -27,8 +29,10 @@
     "react-native-screens": "~3.22.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.6",
-    "expo-splash-screen": "~0.20.5",
-    "expo-dev-client": "~2.4.12"
+    "expo-auth-session": "~5.0.2",
+    "expo-web-browser": "~12.3.2",
+    "expo-linking": "~5.0.2",
+    "expo-crypto": "~12.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
