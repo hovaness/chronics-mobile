@@ -11,7 +11,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "scheme": "com.oniks",
     "assetBundlePatterns": [
       "**/*"
     ],

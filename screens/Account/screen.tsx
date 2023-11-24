@@ -22,8 +22,10 @@ const Category = () => {
         </View>
 
         <Image
+          source={{
+            uri:user.photo
+          }}
           style={styles.user}
-          source={require('../../assets/public/hello.png')}
         />
 
         <View style={{ alignItems: 'center' }}>
@@ -134,7 +136,7 @@ const Category = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity>
           <View style={styles.Button}>
-            <Text style={styles.buttonText}>Удалить</Text>
+            <Text style={styles.buttonText}>Выйти</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -189,7 +191,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    backgroundColor: 'red',
   },
   pageTittle: {
     marginTop: 50,

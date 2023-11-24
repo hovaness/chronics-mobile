@@ -12,7 +12,6 @@ const ShopScreen = () => {
     try {
       const { data } = await supabase.from('PRODUCTS').select()
       if (data) {
-        console.log(data)
         setProduct(data)
       }
     } catch (error) {

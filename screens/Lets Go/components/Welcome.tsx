@@ -11,8 +11,11 @@ export const Welcome = () => {
     Jost: require('../../../assets/fonts/Jost-Light.ttf'),
     'Jost-Light': require('../../../assets/fonts/Jost-Medium.ttf'),
   })
-
   const navigation = useNavigation<GreetingScreenNavigationProp>()
+  
+  if (!fontsLoaded && !error) {
+    return null
+  }
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     textAlign: 'center',
     fontSize: 28,
-    fontFamily: 'Jost-Light',
+    fontFamily: 'Cormorant',
     color:'#fff'
   },
   textDescribe: {

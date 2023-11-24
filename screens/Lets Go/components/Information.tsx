@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     paddingTop: 1,
     textAlign: 'center',
     fontSize: 28,
-    fontFamily: 'Jost-Light',
+    fontFamily: 'Cormorant',
     color:'#fff'
   },
   textDescribe: {

@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
   buttonText: {
     paddingTop: 1,
     textAlign: 'center',
-    fontSize: 30,
-    fontFamily: 'Jost-Light',
+    fontSize: 28,
+    fontFamily: 'Cormorant',
   },
   textDescribe: {
     fontSize: 25,
