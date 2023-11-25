@@ -6,21 +6,22 @@ import {
 import supabase from '../lib/supabase'
 import { useNavigation } from '@react-navigation/native'
 import { useContextForLog } from '../context/contextForLog'
-import { GreetingScreenNavigationProp } from '../types.nav'
+import { GreetingScreenNavigationProp, RootScreenNavigationProp } from '../types.nav'
 import { useUserContext } from '../context/contexUser'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function () {
   GoogleSignin.configure({
     scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
     webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_ID, // client ID of type WEB for your server (needed to verify user ID and offline access). Required to get the `idToken` on the user object!
   })
-  const navigation = useNavigation<GreetingScreenNavigationProp>()
+  const navigation = useNavigation<RootScreenNavigationProp>()
 
   const { user, setUser, setIsLog } = useUserContext()
   function addInContextAndNavigate() {
     setIsLog((prev) => !prev)
 
-    navigation.navigate('Root', { screen: 'Home' })
+    navigation.navigate('Root', {screen: 'Home'})
   }
 
   const signIn = async () => {
@@ -35,6 +36,7 @@ export default function () {
       } else {
         throw new Error('no ID token present!')
       }
+      await AsyncStorage.setItem("user", JSON.stringify(userInfo.user));
       setUser(userInfo.user)
       setIsLog((prev) => !prev)
       navigation.navigate('Root', { screen: 'Home' })
@@ -48,7 +50,7 @@ export default function () {
       } else {
         // some other error happened
       }
-    }
+    } 
   }
 
     return(

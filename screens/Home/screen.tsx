@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { RootScreenNavigationProp } from '../../types.nav'
 import { useUserContext } from '../../context/contexUser'
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const HomeScreen = () => {
   const [fontsLoaded, error] = useFonts({
@@ -20,13 +21,21 @@ const HomeScreen = () => {
   const navigation = useNavigation<RootScreenNavigationProp>()
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ICategory[]>([])
-  const {user} = useUserContext();
+  const {user, setUser} = useUserContext();
+
   useEffect(() => {
     getName()
+    setUserFromStorage();
   }, [])
 
   if (!fontsLoaded && !error) {
     return null
+  }
+  
+
+  async function setUserFromStorage(){
+    const value = await AsyncStorage.getItem("user");
+    setUser(JSON.parse(value));
   }
 
   async function getName() {
@@ -58,7 +67,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
         
-        <Text style={styles.username}>Привет, {user.givenName}!</Text>
+        <Text style={styles.username}>Привет, {user.name}!</Text>
         <Text style={styles.words}>Подобрали слова на сегодня</Text>
         {/* Поиск */}
         <View style={styles.containerInput}>
