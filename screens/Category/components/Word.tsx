@@ -6,6 +6,7 @@ import { IWords } from '../../../models/IWords'
 import { useNavigation } from '@react-navigation/native'
 import { WordScreenNavigatorProp } from '../../../types.nav'
 import { useStatisticContext } from '../../../context/context'
+import supabase from '../../../lib/supabase'
 interface WordProps {
   word: IWords
 }
@@ -14,12 +15,12 @@ export const Word = ({ word }: WordProps) => {
   const { productsInCart, setProductsInCart } = useStatisticContext()
   const navigation = useNavigation<WordScreenNavigatorProp>()
 
-  function addInContext() {
-    if (!count) {
-      setProductsInCart((prev) => prev + 1)
-      count = true
-    }
-
+  async function LearningWord() {
+    await supabase.rpc('insert_learnin_word', {
+      is_favorite_input: false,
+      user_id_input: 8,
+      word_input: word.word,
+    })
     navigation.navigate('Word', word)
     console.log(productsInCart)
   }
@@ -27,7 +28,7 @@ export const Word = ({ word }: WordProps) => {
     <TouchableOpacity
       activeOpacity={0.5}
       style={styles.touchable}
-      onPress={() => addInContext()}>
+      onPress={() => LearningWord()}>
       <View style={styles.View}>
         <Image
           style={styles.image}

@@ -22,7 +22,7 @@ import { LogContext, useContextForLog } from './context/contextForLog'
 import { UserContext } from './context/contexUser'
 import 'expo-dev-client'
 import IUser from './models/IUser'
-
+import Favoritescreen from './screens/Word/Favorite'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function Root() {
@@ -77,6 +77,11 @@ export default function App() {
                   <Stack.Screen
                     name="Word"
                     component={WordScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Favorite"
+                    component={Favoritescreen}
                     options={{ animation: 'fade_from_bottom' }}
                   />
                 </Stack.Group>

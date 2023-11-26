@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Category: ICategory
   Word: IWords
   Greeting: NavigatorScreenParams<GreetingStackParamList>
+  Favorite: IWords
 }
 
 export type ProfileScreenNavigationProp = CompositeNavigationProp<

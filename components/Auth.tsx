@@ -27,6 +27,9 @@ export default function () {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
+      await supabase.rpc('create_new_profile', {
+        google_id_input: userInfo.user.id,
+      })
       if (userInfo.idToken) {
         const { data, error } = await supabase.auth.signInWithIdToken({
           provider: 'google',
@@ -35,6 +38,7 @@ export default function () {
       } else {
         throw new Error('no ID token present!')
       }
+      console.log(userInfo.user)
       setUser(userInfo.user)
       setIsLog((prev) => !prev)
       navigation.navigate('Root', { screen: 'Home' })
@@ -51,11 +55,11 @@ export default function () {
     }
   }
 
-    return(
-        <GoogleSigninButton
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={()=> signIn()}
-        />
-    )
+  return (
+    <GoogleSigninButton
+      size={GoogleSigninButton.Size.Wide}
+      color={GoogleSigninButton.Color.Dark}
+      onPress={() => signIn()}
+    />
+  )
 }

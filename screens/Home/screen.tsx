@@ -1,4 +1,13 @@
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, Button } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Button,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useFonts } from 'expo-font'
@@ -9,7 +18,7 @@ import ICategory from '../../models/ICategory'
 import { useNavigation } from '@react-navigation/native'
 import { RootScreenNavigationProp } from '../../types.nav'
 import { useUserContext } from '../../context/contexUser'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons'
 
 const HomeScreen = () => {
   const [fontsLoaded, error] = useFonts({
@@ -20,7 +29,7 @@ const HomeScreen = () => {
   const navigation = useNavigation<RootScreenNavigationProp>()
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ICategory[]>([])
-  const {user} = useUserContext();
+  const { user } = useUserContext()
   useEffect(() => {
     getName()
   }, [])
@@ -31,7 +40,9 @@ const HomeScreen = () => {
 
   async function getName() {
     try {
-      const { data, error, status } = await supabase.from('CATEGORY').select('*');
+      const { data, error, status } = await supabase
+        .from('CATEGORY')
+        .select('*')
       if (error && status !== 406) {
         throw error
       }
@@ -44,34 +55,46 @@ const HomeScreen = () => {
       }
     }
   }
-  
 
   return (
     <SafeAreaView style={styles.wrapper}>
-      <View style = {styles.container}>
-        <View style= {styles.header}>
+      <View style={styles.container}>
+        <View style={styles.header}>
           <Text style={styles.title}>Хроники</Text>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Root', {screen:'Account'})}>
-            <Image style={styles.avatar} source={{
-              uri: user.photo
-            }}/>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Root', { screen: 'Account' })}>
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: user.photo,
+              }}
+            />
           </TouchableOpacity>
         </View>
-        
+
         <Text style={styles.username}>Привет, {user.givenName}!</Text>
         <Text style={styles.words}>Подобрали слова на сегодня</Text>
         {/* Поиск */}
         <View style={styles.containerInput}>
-          <AntDesign style={styles.search} name="search1" size={20} color="black" />
-          <TextInput  onChangeText={(e) => setQuery(e)}
-            value={query} placeholder='Найти слово...' placeholderTextColor='#585757' style={styles.Input}>
-          </TextInput>
+          <AntDesign
+            style={styles.search}
+            name="search1"
+            size={20}
+            color="black"
+          />
+          <TextInput
+            onChangeText={(e) => setQuery(e)}
+            value={query}
+            placeholder="Найти слово..."
+            placeholderTextColor="#585757"
+            style={styles.Input}></TextInput>
         </View>
 
         {/* Карусель категорий */}
 
-        <View style= {styles.categoryTitleContainer}>
-          <Text style = {styles.categoryTitle}>Категории слов</Text>
+        <View style={styles.categoryTitleContainer}>
+          <Text style={styles.categoryTitle}>Категории слов</Text>
           <TouchableOpacity>
             <AntDesign name="caretright" size={17} color="#ff8000" />
           </TouchableOpacity>
@@ -89,17 +112,20 @@ const HomeScreen = () => {
 
         {/* Игровая зона */}
         <TouchableOpacity activeOpacity={0.7}>
-          <View style= {styles.gameContainer}>
-            <View style = {styles.gameText}>
-              <Text style = {styles.gameTitle}>Игровая зона</Text>
-              <Text style = {styles.gameDesc}>Закрепить знания на практике</Text>
+          <View style={styles.gameContainer}>
+            <View style={styles.gameText}>
+              <Text style={styles.gameTitle}>Игровая зона</Text>
+              <Text style={styles.gameDesc}>Закрепить знания на практике</Text>
               <TouchableOpacity>
-                <View style = {styles.playButton}>
-                  <Text style= {styles.buttonText}>Играть</Text>
+                <View style={styles.playButton}>
+                  <Text style={styles.buttonText}>Играть</Text>
                 </View>
               </TouchableOpacity>
             </View>
-            <Image style= {{width:150, height:111, borderRadius:15}} source={require('../../assets/public/game.png')}/>
+            <Image
+              style={{ width: 150, height: 111, borderRadius: 15 }}
+              source={require('../../assets/public/game.png')}
+            />
           </View>
         </TouchableOpacity>
       </View>
@@ -111,17 +137,17 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   avatar: {
     width: 40,
     height: 40,
-    borderRadius: 50
+    borderRadius: 50,
   },
   wrapper: {
-    backgroundColor: "#E9E2B6",
+    backgroundColor: '#E9E2B6',
     flex: 1,
     maxHeight: 1000,
   },
@@ -136,16 +162,16 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   username: {
-    fontFamily:'Cormorant',
+    fontFamily: 'Cormorant',
     color: '#333',
-    fontSize:24,
-    marginTop:50,
+    fontSize: 24,
+    marginTop: 50,
   },
   words: {
-    fontFamily:'Jost',
+    fontFamily: 'Jost',
     color: '#333',
-    fontSize:14,
-    marginBottom:45,
+    fontSize: 14,
+    marginBottom: 45,
   },
   Input: {
     backgroundColor: '#ffff',
@@ -155,20 +181,20 @@ const styles = StyleSheet.create({
     padding: 10,
     position: 'relative',
     fontFamily: 'Jost',
-    flex:1,
+    flex: 1,
   },
   containerInput: {
     alignItems: 'center',
-    flexDirection:'row',
+    flexDirection: 'row',
   },
   search: {
     position: 'absolute',
     zIndex: 999,
-    left:320,
+    left: 320,
   },
   categoryTitleContainer: {
-    marginVertical:20,
-    flexDirection:'row',
+    marginVertical: 20,
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   categoryTitle: {
@@ -181,11 +207,11 @@ const styles = StyleSheet.create({
     width: 'auto',
     height: 188,
     borderRadius: 15,
-    paddingHorizontal:20,
-    paddingVertical:40,
-    flexDirection:'row',
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'space-between'
+    justifyContent: 'space-between',
   },
   playButton: {
     backgroundColor: '#FF902B',
@@ -195,22 +221,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    gap: 10
+    gap: 10,
   },
   gameTitle: {
     fontFamily: 'Cormorant',
-    fontSize:20,
+    fontSize: 20,
   },
-  gameDesc:{
+  gameDesc: {
     fontFamily: 'Jost',
     width: 120,
-    fontSize:14,
+    fontSize: 14,
   },
   buttonText: {
     fontFamily: 'Cormorant',
     fontSize: 14,
     color: '#fff',
-    paddingHorizontal:7,
-    paddingVertical:4,
-  }
+    paddingHorizontal: 7,
+    paddingVertical: 4,
+  },
 })
