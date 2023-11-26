@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">chronics-mobile</string>
+  <string name="app_name">Хроники</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
   <string name="server_client_id">252516024658-p3pou8fso9cvlouv861ivb32t0ko8t9r.apps.googleusercontent.com</string>
