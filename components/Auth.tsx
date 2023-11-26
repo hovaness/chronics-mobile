@@ -5,9 +5,9 @@ import {
 } from '@react-native-google-signin/google-signin'
 import supabase from '../lib/supabase'
 import { useNavigation } from '@react-navigation/native'
-import { useContextForLog } from '../context/contextForLog'
+import { useContextForLog } from '../сontext/contextForLog'
 import { GreetingScreenNavigationProp, RootScreenNavigationProp } from '../types.nav'
-import { useUserContext } from '../context/contexUser'
+import { useUserContext } from '../сontext/contexUser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function () {

@@ -13,13 +13,13 @@ import { WordScreen } from './screens/Word/screen'
 import ICategory from './models/ICategory'
 import { RootStackParamList } from './types.nav'
 import { useEffect, useMemo, useState } from 'react'
-import { CartContext } from './context/context'
+import { CartContext } from './сontext/context'
 import { Welcome } from './screens/Lets Go/components/Welcome'
 import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
 import { Register } from './screens/Lets Go/components/Register'
-import { LogContext, useContextForLog } from './context/contextForLog'
-import { UserContext } from './context/contexUser'
+import { LogContext, useContextForLog } from './сontext/contextForLog'
+import { UserContext } from './сontext/contexUser'
 import 'expo-dev-client'
 import IUser from './models/IUser'
 import supabase from './lib/supabase'
@@ -58,11 +58,10 @@ export default function App() {
   const getMyUser = async() => {
     try {
       const {data: {user}} = await supabase.auth.getUser();
-      console.log(user)
       setCurrUser(user)
       return user;
     } catch (error) {
-      throw new Error('Ассинхронное хранидище не работает');
+      throw new Error(error);
     }
   }
   

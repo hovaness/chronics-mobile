@@ -8,9 +8,10 @@ import ICategory from '../../models/ICategory'
 
 import { useNavigation } from '@react-navigation/native'
 import { RootScreenNavigationProp } from '../../types.nav'
-import { useUserContext } from '../../context/contexUser'
 import { AntDesign } from '@expo/vector-icons';
+import IUser from '../../models/IUser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {useUserContext } from '../../сontext/contexUser'
 
 const HomeScreen = () => {
   const [fontsLoaded, error] = useFonts({
@@ -21,9 +22,12 @@ const HomeScreen = () => {
   const navigation = useNavigation<RootScreenNavigationProp>()
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ICategory[]>([])
-  const {user, setUser} = useUserContext();
+  const {setUser, user} = useUserContext();
+  const [name, setName] = useState<string>();
+  const [img, setImg] = useState<string>();
+  
 
-  useEffect(() => {
+  useEffect(()  => {
     getName()
     setUserFromStorage();
   }, [])
@@ -34,10 +38,18 @@ const HomeScreen = () => {
   
 
   async function setUserFromStorage(){
-    const value = await AsyncStorage.getItem("user");
-    setUser(JSON.parse(value));
+    try{
+      const value = await AsyncStorage.getItem("user");
+      const parsed = JSON.parse(value);
+      setUser(parsed);
+      setName(parsed.name)
+      setImg(parsed.photo)
+    }
+    catch(error){
+      console.log(error);
+    }
   }
-
+  
   async function getName() {
     try {
       const { data, error, status } = await supabase.from('CATEGORY').select('*');
@@ -54,7 +66,6 @@ const HomeScreen = () => {
     }
   }
   
-
   return (
     <SafeAreaView style={styles.wrapper}>
       <View style = {styles.container}>
@@ -62,12 +73,12 @@ const HomeScreen = () => {
           <Text style={styles.title}>Хроники</Text>
           <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Root', {screen:'Account'})}>
             <Image style={styles.avatar} source={{
-              uri: user.photo
+              uri: img
             }}/>
           </TouchableOpacity>
         </View>
         
-        <Text style={styles.username}>Привет, {user.name}!</Text>
+        <Text style={styles.username}>Привет, {name}!</Text>
         <Text style={styles.words}>Подобрали слова на сегодня</Text>
         {/* Поиск */}
         <View style={styles.containerInput}>
