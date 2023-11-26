@@ -24,7 +24,7 @@ import 'expo-dev-client'
 import IUser from './models/IUser'
 import supabase from './lib/supabase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import setFromAsync from './lib/service'
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -58,10 +58,8 @@ export default function App() {
   const getMyUser = async() => {
     try {
       const {data: {user}} = await supabase.auth.getUser();
-      if(user == null){
-      }
+      console.log(user)
       setCurrUser(user)
-      console.log(currUser);
       return user;
     } catch (error) {
       throw new Error('Ассинхронное хранидище не работает');
@@ -74,37 +72,57 @@ export default function App() {
       <CartContext.Provider value={cartValues}>
         <SafeAreaProvider>
           <NavigationContainer>
-            <Stack.Navigator>
-              {currUser === null ? (
-                <Stack.Screen
-                  name="Greeting"
-                  component={Greeting}
-                  options={{
-                    animation: 'fade_from_bottom',
-                    headerShown: false,
-                  }}
-                />
+              {currUser == null ? (
+                <>
+                  <Stack.Navigator initialRouteName='Greeting'>
+                    <Stack.Screen
+                      name="Greeting"
+                      component={Greeting}
+                      options={{
+                        animation: 'fade_from_bottom',
+                        headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Root"
+                      component={Root}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Category"
+                      component={CategoryScreen}
+                      
+                      options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
+                    />
+                    <Stack.Screen
+                      name="Word"
+                      component={WordScreen}
+                      options={{ animation: 'fade_from_bottom' }}
+                    />
+                  </Stack.Navigator>
+                </>
               ) : (
                 <>
-                  <Stack.Screen
-                    name="Root"
-                    component={Root}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Category"
-                    component={CategoryScreen}
-                    
-                    options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
-                  />
-                  <Stack.Screen
-                    name="Word"
-                    component={WordScreen}
-                    options={{ animation: 'fade_from_bottom' }}
-                  />
+                  <Stack.Navigator initialRouteName='Root'>
+                    <Stack.Screen
+                      name="Root"
+                      component={Root}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Category"
+                      component={CategoryScreen}
+                      
+                      options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
+                    />
+                    <Stack.Screen
+                      name="Word"
+                      component={WordScreen}
+                      options={{ animation: 'fade_from_bottom' }}
+                    />
+                  </Stack.Navigator>
                 </>
               )}
-            </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
       </CartContext.Provider>
