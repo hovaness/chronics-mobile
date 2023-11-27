@@ -1,11 +1,47 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import { WordScreenRouteProp } from '../../types.nav'
-import { useRoute } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { WordScreenNavigatorProp, WordScreenRouteProp } from '../../types.nav'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { useUserContext } from '../../context/contexUser'
+import supabase from '../../lib/supabase'
 
 export const WordScreen = () => {
   const { params } = useRoute<WordScreenRouteProp>()
+  const navigation = useNavigation<WordScreenNavigatorProp>()
+  const { user } = useUserContext()
 
+  const [favorite, setFavourite] = useState(false)
+
+  useEffect(() => {
+    FavouriteWord()
+  }, [])
+
+  async function FavouriteWord() {
+    let { data, error } = await supabase.rpc('select_learning_word', {
+      input_word: params.word,
+      user_id_input: 8,
+    })
+    console.log(data)
+    setFavourite(data)
+    if (error) console.error(error)
+    else console.log(data)
+  }
+
+  const addInfavourites = async function () {
+    await supabase.rpc('update_favorites_true', {
+      user_id_input: 8,
+      word_input: params.word,
+    })
+    console.log('Я добавляю')
+  }
+
+  const deleteFromfavourites = async function () {
+    await supabase.rpc('update_favorites_false', {
+      user_id_input: 8,
+      word_input: params.word,
+    })
+    console.log('Удаление')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -20,6 +56,21 @@ export const WordScreen = () => {
         <Text style={styles.definition}>"{params.quote}"</Text>
         <Text style={styles.definition}>{params.definition}</Text>
       </View>
+      <TouchableOpacity
+        onPress={() => {
+          setFavourite((prev) => !prev)
+          console.log(favorite)
+          favorite ? deleteFromfavourites() : addInfavourites()
+        }}>
+        <View style={{ backgroundColor: 'red,' }}>
+          <Text> В избранное</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
+        <View style={{ backgroundColor: 'red,' }}>
+          <Text>Избранное</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }

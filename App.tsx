@@ -22,6 +22,7 @@ import { LogContext, useContextForLog } from './сontext/contextForLog'
 import { UserContext } from './сontext/contexUser'
 import 'expo-dev-client'
 import IUser from './models/IUser'
+import Favoritescreen from './screens/Word/Favorite'
 import supabase from './lib/supabase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -101,26 +102,30 @@ export default function App() {
                   </Stack.Navigator>
                 </>
               ) : (
-                <>
-                  <Stack.Navigator initialRouteName='Root'>
-                    <Stack.Screen
-                      name="Root"
-                      component={Root}
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="Category"
-                      component={CategoryScreen}
-                      
-                      options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
-                    />
-                    <Stack.Screen
-                      name="Word"
-                      component={WordScreen}
-                      options={{ animation: 'fade_from_bottom' }}
-                    />
-                  </Stack.Navigator>
-                </>
+               <>
+                <Stack.Group>
+                  <Stack.Screen
+                    name="Root"
+                    component={Root}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Category"
+                    component={CategoryScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Word"
+                    component={WordScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Favorite"
+                    component={Favoritescreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                </Stack.Group>
+              </>
               )}
           </NavigationContainer>
         </SafeAreaProvider>
