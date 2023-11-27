@@ -12,17 +12,21 @@ import Tabs from './navigation/Tabs'
 import { WordScreen } from './screens/Word/screen'
 import ICategory from './models/ICategory'
 import { RootStackParamList } from './types.nav'
-import { useState } from 'react'
-import { CartContext } from './context/context'
+import { useEffect, useMemo, useState } from 'react'
+import { CartContext } from './сontext/context'
 import { Welcome } from './screens/Lets Go/components/Welcome'
 import { Information } from './screens/Lets Go/components/Information'
 import WelcomeNavigate from './navigation/WelcomeNavigate'
 import { Register } from './screens/Lets Go/components/Register'
-import { LogContext, useContextForLog } from './context/contextForLog'
-import { UserContext } from './context/contexUser'
+import { LogContext, useContextForLog } from './сontext/contextForLog'
+import { UserContext } from './сontext/contexUser'
 import 'expo-dev-client'
 import IUser from './models/IUser'
 import Favoritescreen from './screens/Word/Favorite'
+import supabase from './lib/supabase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function Root() {
@@ -34,6 +38,7 @@ function Greeting() {
 
 export default function App() {
   const [productsInCart, setProductsInCart] = useState(0)
+  const [currUser ,setCurrUser] = useState<any>();
   const [isLog, setIsLog] = useState(true)
   const [user, setUser] = useState<IUser>()
   const userValues = {
@@ -46,23 +51,58 @@ export default function App() {
     productsInCart,
     setProductsInCart,
   }
-  console.log(isLog)
+
+  useEffect(() => {
+    getMyUser();
+  }, [])
+
+  const getMyUser = async() => {
+    try {
+      const {data: {user}} = await supabase.auth.getUser();
+      setCurrUser(user)
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  
+
   return (
     <UserContext.Provider value={userValues}>
       <CartContext.Provider value={cartValues}>
         <SafeAreaProvider>
           <NavigationContainer>
-            <Stack.Navigator>
-              {isLog ? (
-                <Stack.Screen
-                  name="Greeting"
-                  component={Greeting}
-                  options={{
-                    animation: 'fade_from_bottom',
-                    headerShown: false,
-                  }}
-                />
+              {currUser == null ? (
+                <>
+                  <Stack.Navigator initialRouteName='Greeting'>
+                    <Stack.Screen
+                      name="Greeting"
+                      component={Greeting}
+                      options={{
+                        animation: 'fade_from_bottom',
+                        headerShown: false,
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Root"
+                      component={Root}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Category"
+                      component={CategoryScreen}
+                      
+                      options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
+                    />
+                    <Stack.Screen
+                      name="Word"
+                      component={WordScreen}
+                      options={{ animation: 'fade_from_bottom' }}
+                    />
+                  </Stack.Navigator>
+                </>
               ) : (
+               <>
                 <Stack.Group>
                   <Stack.Screen
                     name="Root"
@@ -85,8 +125,8 @@ export default function App() {
                     options={{ animation: 'fade_from_bottom' }}
                   />
                 </Stack.Group>
+              </>
               )}
-            </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>
       </CartContext.Provider>

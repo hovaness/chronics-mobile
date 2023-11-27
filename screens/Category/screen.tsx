@@ -26,7 +26,6 @@ const CategoryScreen = () => {
     let { data, error } = await supabase.rpc('show_words_from_category', {
       cat_name: params.name,
     })
-
     setWord(data)
     if (error) console.error(error)
     else console.log(data)

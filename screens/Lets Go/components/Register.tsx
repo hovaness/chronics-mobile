@@ -5,7 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { GreetingScreenNavigationProp } from '../../../types.nav'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFonts } from 'expo-font/build/FontHooks'
-import { useContextForLog } from '../../../context/contextForLog'
+import { useContextForLog } from '../../../сontext/contextForLog'
 import Auth from '../../../components/Auth'
 
 

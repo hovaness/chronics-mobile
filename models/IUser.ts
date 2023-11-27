@@ -3,8 +3,8 @@ interface IUser{
     name: string;
     email: string;
     photo: string;
-    familyName: string;
-    givenName: string;
-  }
+    familyName: string,
+    givenName: string,
+}
   
   export default IUser;

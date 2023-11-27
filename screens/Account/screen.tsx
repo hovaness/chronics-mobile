@@ -4,8 +4,8 @@ import { useFonts } from 'expo-font'
 
 import { useNavigation } from '@react-navigation/native'
 import { GreetingScreenNavigationProp } from '../../types.nav'
-import { useStatisticContext } from '../../context/context'
-import { useUserContext } from '../../context/contexUser'
+import { useStatisticContext } from '../../сontext/context'
+import { useUserContext } from '../../сontext/contexUser'
 
 const Category = () => {
   const { productsInCart } = useStatisticContext()

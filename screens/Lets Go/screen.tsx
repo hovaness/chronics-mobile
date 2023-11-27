@@ -7,7 +7,7 @@ import {
   CategoryScreenNavigationProp,
   ProfileScreenNavigationProp,
 } from '../../types.nav'
-import { useStatisticContext } from '../../context/context'
+import { useStatisticContext } from '../../сontext/context'
 
 const Hello = () => {
   return <View></View>
