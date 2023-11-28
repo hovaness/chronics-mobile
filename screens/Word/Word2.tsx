@@ -18,12 +18,7 @@ import supabase from '../../lib/supabase'
 import { AntDesign } from '@expo/vector-icons'
 
 export const Word2 = () => {
-  const currentValue = new Animated.Value(1)
   const { params } = useRoute<Word2ScreenRouteProp>()
-  const { isLog } = useUserContext()
-  const [visible, setVisible] = useState(false)
-  const [favorite, setFavourite] = useState(false)
-  const AnimatedIcon = Animated.createAnimatedComponent(AntDesign)
 
   return (
     <View style={styles.container}>

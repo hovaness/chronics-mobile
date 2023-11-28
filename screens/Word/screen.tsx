@@ -83,16 +83,8 @@ export const WordScreen = () => {
         <Text style={styles.definition}>{params.definition}</Text>
       </View>
       <TouchableOpacity
-        onPress={() => {
-          setFavourite((prev) => !prev)
-          console.log(favorite)
-          favorite ? deleteFromfavourites() : addInfavourites()
-        }}>
-        <View style={{ backgroundColor: 'red,' }}>
-          <Text> В избранное</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
+        style={styles.favour}
+        onPress={() => navigation.navigate('Favorite')}>
         <View style={{ backgroundColor: 'red,' }}>
           <Text>Избранное</Text>
         </View>
@@ -132,6 +124,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#E9E2B6',
     flex: 1,
+    alignItems: 'center',
+  },
+  favour: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    height: 30,
+    width: 90,
+    position: 'absolute',
+    top: 60,
+    right: -6,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   content: {
