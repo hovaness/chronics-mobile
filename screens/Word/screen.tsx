@@ -1,20 +1,45 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { WordScreenNavigatorProp, WordScreenRouteProp } from '../../types.nav'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { useUserContext } from '../../context/contexUser'
+import { useUserContext } from '../../сontext/contexUser'
 import supabase from '../../lib/supabase'
+import { AntDesign } from '@expo/vector-icons'
 
 export const WordScreen = () => {
+  const currentValue = new Animated.Value(1)
   const { params } = useRoute<WordScreenRouteProp>()
   const navigation = useNavigation<WordScreenNavigatorProp>()
-  const { user } = useUserContext()
-
+  const { isLog } = useUserContext()
+  const [visible, setVisible] = useState(false)
   const [favorite, setFavourite] = useState(false)
-
+  const AnimatedIcon = Animated.createAnimatedComponent(AntDesign)
   useEffect(() => {
     FavouriteWord()
-  }, [])
+  }, [isLog])
+
+  useEffect(() => {
+    if (favorite == true)
+      Animated.spring(currentValue, {
+        toValue: 2,
+        useNativeDriver: false,
+        friction: 2,
+      }).start(() => {
+        return Animated.spring(currentValue, {
+          toValue: 1,
+          useNativeDriver: false,
+        }).start(() => {
+          setVisible(false)
+        })
+      })
+  }, [favorite])
 
   async function FavouriteWord() {
     let { data, error } = await supabase.rpc('select_learning_word', {
@@ -42,6 +67,7 @@ export const WordScreen = () => {
     })
     console.log('Удаление')
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -57,20 +83,39 @@ export const WordScreen = () => {
         <Text style={styles.definition}>{params.definition}</Text>
       </View>
       <TouchableOpacity
-        onPress={() => {
-          setFavourite((prev) => !prev)
-          console.log(favorite)
-          favorite ? deleteFromfavourites() : addInfavourites()
-        }}>
-        <View style={{ backgroundColor: 'red,' }}>
-          <Text> В избранное</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Favorite')}>
+        style={styles.favour}
+        onPress={() => navigation.navigate('Favorite')}>
         <View style={{ backgroundColor: 'red,' }}>
           <Text>Избранное</Text>
         </View>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          if (favorite == false) {
+            setVisible(true)
+          }
+          setFavourite((prev) => !prev)
+          console.log(favorite)
+
+          favorite ? deleteFromfavourites() : addInfavourites()
+        }}>
+        <AntDesign name={favorite ? 'heart' : 'hearto'} size={30} color="red" />
+      </TouchableOpacity>
+      {visible && (
+        <AnimatedIcon
+          style={{
+            position: 'absolute',
+            top: 150,
+            left: '45%',
+            elevation: 4,
+            zIndex: 3,
+            transform: [{ scale: currentValue }],
+          }}
+          name="heart"
+          size={50}
+          color="red"
+        />
+      )}
     </View>
   )
 }
@@ -79,6 +124,17 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#E9E2B6',
     flex: 1,
+    alignItems: 'center',
+  },
+  favour: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    height: 30,
+    width: 90,
+    position: 'absolute',
+    top: 60,
+    right: -6,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   content: {

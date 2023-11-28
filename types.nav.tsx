@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Word: IWords
   Greeting: NavigatorScreenParams<GreetingStackParamList>
   Favorite: IWords
+  Word2: IWords
 }
 
 export type ProfileScreenNavigationProp = CompositeNavigationProp<
@@ -54,6 +55,12 @@ export type WordScreenNavigatorProp = NativeStackNavigationProp<
   'Word'
 >
 export type WordScreenRouteProp = RouteProp<RootStackParamList, 'Word'>
+
+export type Word2ScreenNavigatorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Word2'
+>
+export type Word2ScreenRouteProp = RouteProp<RootStackParamList, 'Word2'>
 
 export type GreetingScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>

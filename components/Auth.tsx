@@ -6,7 +6,10 @@ import {
 import supabase from '../lib/supabase'
 import { useNavigation } from '@react-navigation/native'
 import { useContextForLog } from '../сontext/contextForLog'
-import { GreetingScreenNavigationProp, RootScreenNavigationProp } from '../types.nav'
+import {
+  GreetingScreenNavigationProp,
+  RootScreenNavigationProp,
+} from '../types.nav'
 import { useUserContext } from '../сontext/contexUser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -18,11 +21,6 @@ export default function () {
   const navigation = useNavigation<RootScreenNavigationProp>()
 
   const { user, setUser, setIsLog } = useUserContext()
-  function addInContextAndNavigate() {
-    setIsLog((prev) => !prev)
-
-    navigation.navigate('Root', {screen: 'Home'})
-  }
 
   const signIn = async () => {
     try {
@@ -39,7 +37,7 @@ export default function () {
       } else {
         throw new Error('no ID token present!')
       }
-      await AsyncStorage.setItem("user", JSON.stringify(userInfo.user));
+      await AsyncStorage.setItem('user', JSON.stringify(userInfo.user))
       setUser(userInfo.user)
       setIsLog((prev) => !prev)
       navigation.navigate('Root', { screen: 'Home' })
@@ -53,7 +51,7 @@ export default function () {
       } else {
         // some other error happened
       }
-    } 
+    }
   }
 
   return (

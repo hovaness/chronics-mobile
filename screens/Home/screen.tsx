@@ -17,15 +17,10 @@ import ICategory from '../../models/ICategory'
 
 import { useNavigation } from '@react-navigation/native'
 import { RootScreenNavigationProp } from '../../types.nav'
-
-import { useUserContext } from '../../context/contexUser'
 import { AntDesign } from '@expo/vector-icons'
-
-import { AntDesign } from '@expo/vector-icons';
 import IUser from '../../models/IUser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {useUserContext } from '../../сontext/contexUser'
-
+import { useUserContext } from '../../сontext/contexUser'
 
 const HomeScreen = () => {
   const [fontsLoaded, error] = useFonts({
@@ -37,34 +32,32 @@ const HomeScreen = () => {
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ICategory[]>([])
 
-  const {setUser, user} = useUserContext();
-  const [name, setName] = useState<string>();
-  const [img, setImg] = useState<string>();
-  
+  const { setUser, user } = useUserContext()
+  const [name, setName] = useState<string>()
+  const [img, setImg] = useState<string>()
 
-  useEffect(()  => {
+  useEffect(() => {
     getName()
-    setUserFromStorage();
+    setUserFromStorage()
   }, [])
 
   if (!fontsLoaded && !error) {
     return null
   }
-  
 
-  async function setUserFromStorage(){
-    try{
-      const value = await AsyncStorage.getItem("user");
-      const parsed = JSON.parse(value);
-      setUser(parsed);
+  async function setUserFromStorage() {
+    try {
+      const value = await AsyncStorage.getItem('user')
+      console.log(value)
+      const parsed = JSON.parse(value)
+      setUser(parsed)
       setName(parsed.name)
       setImg(parsed.photo)
-    }
-    catch(error){
-      console.log(error);
+    } catch (error) {
+      console.log(error)
     }
   }
-  
+
   async function getName() {
     try {
       const { data, error, status } = await supabase
@@ -88,14 +81,19 @@ const HomeScreen = () => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Хроники</Text>
-          <Text style={styles.username}>Привет, {name}!</Text>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate('Root', {screen:'Account'})}>
-            <Image style={styles.avatar} source={{
-              uri: img
-            }}/>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Root', { screen: 'Account' })}>
+            <Image
+              style={styles.avatar}
+              source={{
+                uri: img,
+              }}
+            />
           </TouchableOpacity>
         </View>
-
+        <Text style={styles.username}>Привет, {name}!</Text>
         <Text style={styles.words}>Подобрали слова на сегодня</Text>
         {/* Поиск */}
         <View style={styles.containerInput}>
