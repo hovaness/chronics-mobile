@@ -25,8 +25,7 @@ import IUser from './models/IUser'
 import Favoritescreen from './screens/Word/Favorite'
 import supabase from './lib/supabase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-
+import { Word2 } from './screens/Word/Word2'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 function Root() {
@@ -38,7 +37,7 @@ function Greeting() {
 
 export default function App() {
   const [productsInCart, setProductsInCart] = useState(0)
-  const [currUser ,setCurrUser] = useState<any>();
+  const [currUser, setCurrUser] = useState<any>(null)
   const [isLog, setIsLog] = useState(true)
   const [user, setUser] = useState<IUser>()
   const userValues = {
@@ -53,57 +52,70 @@ export default function App() {
   }
 
   useEffect(() => {
-    getMyUser();
+    getMyUser()
   }, [])
 
-  const getMyUser = async() => {
+  const getMyUser = async () => {
     try {
-      const {data: {user}} = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
       setCurrUser(user)
-      return user;
+      return user
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error)
     }
   }
-  
 
   return (
     <UserContext.Provider value={userValues}>
       <CartContext.Provider value={cartValues}>
         <SafeAreaProvider>
           <NavigationContainer>
-              {currUser == null ? (
-                <>
-                  <Stack.Navigator initialRouteName='Greeting'>
-                    <Stack.Screen
-                      name="Greeting"
-                      component={Greeting}
-                      options={{
-                        animation: 'fade_from_bottom',
-                        headerShown: false,
-                      }}
-                    />
-                    <Stack.Screen
-                      name="Root"
-                      component={Root}
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="Category"
-                      component={CategoryScreen}
-                      
-                      options={{ animation: 'fade_from_bottom', headerTitle: "Категории" }}
-                    />
-                    <Stack.Screen
-                      name="Word"
-                      component={WordScreen}
-                      options={{ animation: 'fade_from_bottom' }}
-                    />
-                  </Stack.Navigator>
-                </>
-              ) : (
-               <>
-                <Stack.Group>
+            {currUser == null || undefined ? (
+              <>
+                <Stack.Navigator initialRouteName="Greeting">
+                  <Stack.Screen
+                    name="Greeting"
+                    component={Greeting}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Root"
+                    component={Root}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Category"
+                    component={CategoryScreen}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerTitle: 'Категории',
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Word"
+                    component={WordScreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Word2"
+                    component={Word2}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Favorite"
+                    component={Favoritescreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                </Stack.Navigator>
+              </>
+            ) : (
+              <>
+                <Stack.Navigator>
                   <Stack.Screen
                     name="Root"
                     component={Root}
@@ -120,13 +132,18 @@ export default function App() {
                     options={{ animation: 'fade_from_bottom' }}
                   />
                   <Stack.Screen
+                    name="Word2"
+                    component={Word2}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
                     name="Favorite"
                     component={Favoritescreen}
                     options={{ animation: 'fade_from_bottom' }}
                   />
-                </Stack.Group>
+                </Stack.Navigator>
               </>
-              )}
+            )}
           </NavigationContainer>
         </SafeAreaProvider>
       </CartContext.Provider>

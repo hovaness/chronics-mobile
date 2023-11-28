@@ -12,7 +12,7 @@ const Category = () => {
   const { user } = useUserContext()
   const navigation = useNavigation<GreetingScreenNavigationProp>()
   return (
-    <View>
+    <View style={{ position: 'relative' }}>
       <View style={{ alignItems: 'center' }}>
         <View style={styles.pageTittle}>
           <Text style={{ fontFamily: 'Cormorant', fontSize: 25 }}>ХРОНИКИ</Text>
@@ -23,7 +23,7 @@ const Category = () => {
 
         <Image
           source={{
-            uri:user.photo
+            uri: user.photo,
           }}
           style={styles.user}
         />
@@ -31,9 +31,13 @@ const Category = () => {
         <View style={{ alignItems: 'center' }}>
           <Text style={styles.statTittle}>{user.name}</Text>
         </View>
-        <View>
-          <Text></Text>
-        </View>
+        <TouchableOpacity
+          style={styles.favContainer}
+          onPress={() => navigation.navigate('Favorite')}>
+          <View>
+            <Text style={{ fontFamily: 'Cormorant' }}>Избранное</Text>
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View
@@ -168,6 +172,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
+  favContainer: {
+    borderRadius: 10,
+    backgroundColor: 'red',
+    position: 'absolute',
+    height: 30,
+    width: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    right: 0,
+    top: 110,
+  },
+  favText: {},
   title: {
     paddingBottom: 8,
     fontFamily: 'Cormorant',

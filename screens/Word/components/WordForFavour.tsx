@@ -1,27 +1,41 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 
-import React from 'react'
+import React, { useState } from 'react'
 
 import { IWords } from '../../../models/IWords'
 import { useNavigation } from '@react-navigation/native'
-import { WordScreenNavigatorProp } from '../../../types.nav'
+import {
+  Word2ScreenNavigatorProp,
+  WordScreenNavigatorProp,
+} from '../../../types.nav'
 import { useStatisticContext } from '../../../сontext/context'
 import supabase from '../../../lib/supabase'
+import { AntDesign } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useUserContext } from '../../../сontext/contexUser'
+
 interface WordProps {
   word: IWords
 }
-export const Word = ({ word }: WordProps) => {
+let count = false
+export const WordForFavour = ({ word }: WordProps) => {
+  const { isLog, setIsLog } = useUserContext()
   const { productsInCart, setProductsInCart } = useStatisticContext()
-  const navigation = useNavigation<WordScreenNavigatorProp>()
+  const [del, setDel] = useState(false)
+  const navigation = useNavigation<Word2ScreenNavigatorProp>()
 
-  async function LearningWord() {
-    await supabase.rpc('insert_learnin_word', {
-      is_favorite_input: false,
+  const deleteFromfavourites = async function () {
+    await supabase.rpc('update_favorites_false', {
       user_id_input: 8,
       word_input: word.word,
     })
-    navigation.navigate('Word', word)
-    console.log(productsInCart)
+    setIsLog((prev) => !prev)
+    console.log('Удаление')
+  }
+
+  function LearningWord() {
+    console.log(word.definition)
+    navigation.navigate('Word2', word)
   }
   return (
     <TouchableOpacity
@@ -40,15 +54,27 @@ export const Word = ({ word }: WordProps) => {
           </Text>
         </View>
       </View>
+      <TouchableOpacity
+        style={styles.touchableClose}
+        onPress={() => deleteFromfavourites()}>
+        <AntDesign name="close" size={15} color="white" />
+      </TouchableOpacity>
     </TouchableOpacity>
   )
 }
+
 export const styles = StyleSheet.create({
+  touchableClose: {
+    position: 'absolute',
+    top: 15,
+    right: 5,
+  },
   touchable: {
     width: 170,
     justifyContent: 'center',
     marginLeft: 11,
     paddingBottom: 11,
+    position: 'relative',
   },
   image: {
     width: 130,
@@ -66,9 +92,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#8A6B3F',
     borderRadius: 14,
     flexDirection: 'column',
-    position: 'relative',
-    alignItems: 'center',
 
+    alignItems: 'center',
     padding: 15,
     width: 170,
     borderBottomWidth: 1,

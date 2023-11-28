@@ -6,20 +6,41 @@ import supabase from '../../lib/supabase'
 import { Word } from '../Category/components/Word'
 import UseDebounce from '../Category/Debounds/debounds'
 import { IWords } from '../../models/IWords'
-import { useUserContext } from '../../context/contexUser'
-
+import { useUserContext } from '../../сontext/contexUser'
+import { WordForFavour } from './components/WordForFavour'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const CategoryScreen = () => {
   const { params } = useRoute<WordScreenRouteProp>()
-  const { user } = useUserContext()
+  const { isLog } = useUserContext()
   const [word, setWord] = useState<IWords[]>([])
-  useEffect(() => {
-    getProducts()
-  }, [])
+  const [del, setDel] = useState(false)
+  const [query, setQuery] = useState('')
+  const debouncedSearch = UseDebounce(query, 300)
 
-  async function getProducts() {
+  useEffect(() => {
+    getFavouriteWords()
+  }, [isLog])
+
+  useMemo(() => {
+    const newQuery = query.trim()
+    SearchWord(newQuery)
+  }, [debouncedSearch])
+
+  async function getFavouriteWords() {
     let { data, error } = await supabase.rpc('show_favorite_words', {
       user_id_input: 8,
     })
+
+    setWord(data)
+    if (error) console.error(error)
+    else console.log(data)
+  }
+  async function SearchWord(word) {
+    let { data, error } = await supabase
+      .rpc('show_favorite_words', {
+        user_id_input: 8,
+      })
+      .like('word', `%${word}%`)
     setWord(data)
     if (error) console.error(error)
     else console.log(data)
@@ -33,16 +54,21 @@ const CategoryScreen = () => {
         <View style={styles.containerDesription}>
           <View style={styles.descriptionContent}>
             <Text style={{ textAlign: 'center' }}>
-              тут лежать избранные слова
+              Тут лежат ваши избранные слова
             </Text>
           </View>
         </View>
         <View style={styles.containerInput}>
-          <TextInput style={styles.Input} placeholder="Поиск..." />
+          <TextInput
+            style={styles.Input}
+            onChangeText={(e) => setQuery(e)}
+            value={query}
+            placeholder="Поиск..."
+          />
         </View>
         <View style={styles.View}>
           {word.map((word) => (
-            <Word word={word} key={word.word} />
+            <WordForFavour word={word} key={word.word} />
           ))}
         </View>
       </View>
