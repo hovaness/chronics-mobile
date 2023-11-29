@@ -21,6 +21,7 @@ import { AntDesign } from '@expo/vector-icons'
 import IUser from '../../models/IUser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useUserContext } from '../../сontext/contexUser'
+import UseDebounce from '../Category/Debounds/debounds'
 
 const HomeScreen = () => {
   const [fontsLoaded, error] = useFonts({
@@ -31,7 +32,7 @@ const HomeScreen = () => {
   const navigation = useNavigation<RootScreenNavigationProp>()
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ICategory[]>([])
-
+  const debouncedSearch = UseDebounce(query, 300)
   const { setUser, user } = useUserContext()
   const [name, setName] = useState<string>()
   const [img, setImg] = useState<string>()
@@ -40,6 +41,11 @@ const HomeScreen = () => {
     getName()
     setUserFromStorage()
   }, [])
+
+  useMemo(() => {
+    const newQuery = query.trim()
+    getSerchName(newQuery)
+  }, [debouncedSearch])
 
   if (!fontsLoaded && !error) {
     return null
@@ -55,6 +61,24 @@ const HomeScreen = () => {
       setImg(parsed.photo)
     } catch (error) {
       console.log(error)
+    }
+  }
+  async function getSerchName(categories) {
+    try {
+      const { data, error, status } = await supabase
+        .from('CATEGORY')
+        .select('*')
+        .ilike('name', `%${categories}%`)
+      if (error && status !== 406) {
+        throw error
+      }
+      if (data) {
+        setCategories(data)
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message)
+      }
     }
   }
 
@@ -106,7 +130,7 @@ const HomeScreen = () => {
           <TextInput
             onChangeText={(e) => setQuery(e)}
             value={query}
-            placeholder="Найти слово..."
+            placeholder="Найти категорию слов..."
             placeholderTextColor="#585757"
             style={styles.Input}></TextInput>
         </View>
