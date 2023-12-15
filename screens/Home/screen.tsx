@@ -81,7 +81,7 @@ const HomeScreen = () => {
       }
     }
   }
-
+  
   async function getName() {
     try {
       const { data, error, status } = await supabase
@@ -155,7 +155,11 @@ const HomeScreen = () => {
         </ScrollView>
 
         {/* Игровая зона */}
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => {
+            navigation.navigate('GameZone')
+          }}>
           <View style={styles.gameContainer}>
             <View style={styles.gameText}>
               <Text style={styles.gameTitle}>Игровая зона</Text>

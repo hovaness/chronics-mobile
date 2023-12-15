@@ -1,25 +1,22 @@
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import ICategory from './models/ICategory'
-import {
-  BottomTabNavigationProp,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs'
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import {
   CompositeNavigationProp,
-  CompositeScreenProps,
   NavigatorScreenParams,
   RouteProp,
 } from '@react-navigation/native'
 import { IWords } from './models/IWords'
+import { IGame } from './models/IGame'
+import { IQuestion } from './models/IQuestion'
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<TabStackParamList>
   Category: ICategory
   Word: IWords
   Greeting: NavigatorScreenParams<GreetingStackParamList>
+  GameZone: undefined
+  Question: IGame
   Favorite: IWords
   Word2: IWords
 }
@@ -66,3 +63,9 @@ export type GreetingScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>
 
 export type GreetingScreenRouteProp = RouteProp<RootStackParamList>
+
+export type QuestionScreenNavigatorProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Question'
+>
+export type QuestionScreenRouteProp = RouteProp<RootStackParamList, 'Question'>

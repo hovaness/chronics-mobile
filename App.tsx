@@ -1,30 +1,23 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import {
-  NavigationContainer,
-  NavigatorScreenParams,
-} from '@react-navigation/native'
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import CategoryScreen from './screens/Category/screen'
 import Tabs from './navigation/Tabs'
 import { WordScreen } from './screens/Word/screen'
-import ICategory from './models/ICategory'
+
 import { RootStackParamList } from './types.nav'
 import { useEffect, useMemo, useState } from 'react'
 import { CartContext } from './сontext/context'
-import { Welcome } from './screens/Lets Go/components/Welcome'
-import { Information } from './screens/Lets Go/components/Information'
+
 import WelcomeNavigate from './navigation/WelcomeNavigate'
-import { Register } from './screens/Lets Go/components/Register'
-import { LogContext, useContextForLog } from './сontext/contextForLog'
+import { GameZone } from './screens/GameZone/GameZone'
+import { Question } from './screens/GameZone/Question'
 import { UserContext } from './сontext/contexUser'
 import 'expo-dev-client'
 import IUser from './models/IUser'
 import Favoritescreen from './screens/Word/Favorite'
 import supabase from './lib/supabase'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import { Word2 } from './screens/Word/Word2'
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -107,8 +100,13 @@ export default function App() {
                     options={{ animation: 'fade_from_bottom' }}
                   />
                   <Stack.Screen
-                    name="Favorite"
-                    component={Favoritescreen}
+                    name="GameZone"
+                    component={GameZone}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Question"
+                    component={Question}
                     options={{ animation: 'fade_from_bottom' }}
                   />
                 </Stack.Navigator>
@@ -139,6 +137,16 @@ export default function App() {
                   <Stack.Screen
                     name="Favorite"
                     component={Favoritescreen}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="GameZone"
+                    component={GameZone}
+                    options={{ animation: 'fade_from_bottom' }}
+                  />
+                  <Stack.Screen
+                    name="Question"
+                    component={Question}
                     options={{ animation: 'fade_from_bottom' }}
                   />
                 </Stack.Navigator>
