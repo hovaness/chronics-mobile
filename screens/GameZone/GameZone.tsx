@@ -10,9 +10,16 @@ import React, { useEffect, useState } from 'react'
 import { IGame } from '../../models/IGame'
 import supabase from '../../lib/supabase'
 import { QuizType } from './QuizType'
+import { useFonts } from 'expo-font'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const GameZone = () => {
   const [quizs, setQuiz] = useState<IGame[]>([])
+  const [fontsLoaded, error] = useFonts({
+    'Cormorant':require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
+    'Jost': require('../../assets/fonts/Jost-Light.ttf'),
+    'JostTitle': require('../../assets/fonts/Jost-Medium.ttf')
+  })
   useEffect(() => {
     getQuiz()
   }, [])
@@ -32,10 +39,10 @@ export const GameZone = () => {
     }
   }
   return (
-    <View style={styles.main}>
+    <SafeAreaView style={styles.main}>
       <View style={styles.container}>
         <View>
-          <Text style={styles.tittle}>Игровая зона</Text>
+          <Text style={styles.title}>Игровая зона</Text>
         </View>
         <View style={styles.standart}>
           <Text style={styles.standartContent}>Стандартная викторина</Text>
@@ -46,8 +53,8 @@ export const GameZone = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.Content}>
-          <Text style={{ padding: 15, marginLeft: 15, fontSize: 20 }}>
-            Викторины
+          <Text style={styles.subtitle}>
+            Другие викторины
           </Text>
           <View>
             <ScrollView
@@ -60,12 +67,7 @@ export const GameZone = () => {
             </ScrollView>
           </View>
           <Text
-            style={{
-              marginLeft: 26,
-              fontSize: 20,
-              paddingBottom: 2,
-              paddingTop: 5,
-            }}>
+            style={styles.subtitle}>
             Тренировочный режим
           </Text>
           <View style={{ alignItems: 'center' }}>
@@ -84,36 +86,27 @@ export const GameZone = () => {
               </View>
             </View>
           </View>
-          <View style={{ alignItems: 'center' }}>
-            <View style={styles.training}>
-              <View style={styles.trainingContent}>
-                <View>
-                  <Text style={styles.trainingText}>
-                    Отвечайте на вопросы выбранной категории сколько угодно!
-                  </Text>
-                  <Text style={styles.trainingButton}>Открыть</Text>
-                </View>
-                <Image
-                  style={{ width: 130, height: 80, borderRadius: 15 }}
-                  source={require('../../assets/public/game.png')}
-                />
-              </View>
-            </View>
-          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
   main: {
     boxSizing: 'border-box',
-    backgroundColor: '#E9E2B6',
     flex: 1,
+    backgroundColor: '#E9E2B6',
   },
-  tittle: {
-    fontSize: 20,
+  title: {
+    fontSize: 24,
     margin: 10,
+    fontFamily:'Cormorant'
+  },
+  subtitle:{
+    fontFamily: 'Cormorant',
+    fontSize:20,
+    marginHorizontal:20,
+    marginTop:20,
   },
   container: {
     flexDirection: 'column',
@@ -131,16 +124,21 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   standartContent: {
-    fontSize: 17,
+    fontSize: 18,
     padding: 30,
+    fontFamily:'Cormorant',
+    color: 'white'
   },
   button: {
     margin: 20,
   },
   buttonContent: {
-    padding: 10,
     backgroundColor: '#A05036',
     borderRadius: 16,
+    fontFamily:'Jost',
+    color:'white',
+    paddingHorizontal:20,
+    paddingVertical:10,
   },
   Scroll: {
     marginLeft: 22,

@@ -6,15 +6,23 @@ import { useEffect, useMemo, useState } from 'react'
 import { IQuestion } from '../../models/IQuestion'
 import { IAnswer } from '../../models/IAnswer'
 import { Answer } from './components/Answer'
+import { useFonts } from 'expo-font'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const Question = () => {
+  
   const { params } = useRoute<QuestionScreenRouteProp>()
-  const [questuions, setQuestions] = useState<IQuestion[]>([])
+  const [questions, setQuestions] = useState<IQuestion[]>([])
   const [answers, setAnswers] = useState<IAnswer[]>([])
   const [load, setLoad] = useState(false)
   const [index, setIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-
+  // const [fontsLoaded, error] = useFonts({
+  //   Cormorant : require('../../assets/fonts/CormorantUnicase-Bold.ttf'),
+  // })
+  // if(!fontsLoaded && !error ){
+  //   return null
+  // }
   useEffect(() => {
     getQuestion()
   }, [])
@@ -22,6 +30,8 @@ export const Question = () => {
   const Load = () => {
     setIsLoading(false)
   }
+
+
   useEffect(() => {
     getAnswers()
     if (load) {
@@ -29,7 +39,7 @@ export const Question = () => {
     }
     setIsLoading(true)
     setTimeout(Load, 400)
-  }, [questuions, index])
+  }, [questions, index])
 
   async function getQuestion() {
     try {
@@ -51,21 +61,21 @@ export const Question = () => {
   }
   async function getAnswers() {
     let { data } = await supabase.rpc('show_answers_on_question', {
-      id_input: questuions[index].id,
+      id_input: questions[index].id,
     })
     setAnswers(data)
     console.log(answers)
   }
 
   return (
-    <View style={styles.container}>
-      {questuions.length == 0 ? (
+    <SafeAreaView style={styles.container}>
+      {questions.length == 0 ? (
         <View>
-          <Text>Loading...</Text>
+          <Text>Загрузка...</Text>
         </View>
       ) : (
         <View>
-          <Text>{questuions[index].question}</Text>
+          <Text style={styles.title}>{questions[index].question}</Text>
         </View>
       )}
       <View style={styles.imageContainer}>
@@ -89,18 +99,24 @@ export const Question = () => {
             ))}
           </>
         ) : (
-          <Text>Loading...</Text>
+          <Text>Следующий вопрос...</Text>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop:20,
     backgroundColor: '#E9E2B6',
     flex: 1,
     alignItems: 'center',
+  },
+  title:{
+    marginHorizontal:10,
+    fontSize:18,
+    fontFamily: 'Cormorant'
   },
   content: {
     padding: 15,

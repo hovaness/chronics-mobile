@@ -92,22 +92,34 @@ export default function App() {
                   <Stack.Screen
                     name="Word"
                     component={WordScreen}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerShown: false
+                    }}
                   />
                   <Stack.Screen
                     name="Word2"
                     component={Word2}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerShown: false
+                    }}
                   />
                   <Stack.Screen
                     name="GameZone"
                     component={GameZone}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerShown: false
+                    }}
                   />
                   <Stack.Screen
                     name="Question"
                     component={Question}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{
+                      animation: 'fade_from_bottom',
+                      headerShown: false
+                    }}
                   />
                 </Stack.Navigator>
               </>
@@ -122,32 +134,32 @@ export default function App() {
                   <Stack.Screen
                     name="Category"
                     component={CategoryScreen}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom' ,headerShown: false}}
                   />
                   <Stack.Screen
                     name="Word"
                     component={WordScreen}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom',headerShown: false }}
                   />
                   <Stack.Screen
                     name="Word2"
                     component={Word2}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom',headerShown: false }}
                   />
                   <Stack.Screen
                     name="Favorite"
                     component={Favoritescreen}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom',headerShown: false }}
                   />
                   <Stack.Screen
                     name="GameZone"
                     component={GameZone}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom',headerShown: false }}
                   />
                   <Stack.Screen
                     name="Question"
                     component={Question}
-                    options={{ animation: 'fade_from_bottom' }}
+                    options={{ animation: 'fade_from_bottom',headerShown: false }}
                   />
                 </Stack.Navigator>
               </>
